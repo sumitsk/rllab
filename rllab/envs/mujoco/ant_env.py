@@ -17,6 +17,26 @@ class AntEnv(MujocoEnv, Serializable):
     def __init__(self, *args, **kwargs):
         super(AntEnv, self).__init__(*args, **kwargs)
         Serializable.__init__(self, *args, **kwargs)
+        self.velocity_dir = 'posx'
+    
+    '''    
+    def myinit(self, velocity_dir):
+        self.velocity_dir = velocity_dir
+    '''
+    
+    def get_forward_reward(self):
+        comvel = self.get_body_comvel("torso")
+        if self.velocity_dir == 'posx':
+            forward_reward = comvel[0]
+        elif self.velocity_dir == 'posy':
+            forward_reward = comvel[1]
+        elif self.velocity_dir == 'negx':
+            forward_reward = -comvel[0]
+        elif self.velocity_dir == 'negy':
+            forward_reward = -comvel[1]
+        else:
+            raise NotImplementedError
+        return forward_reward
 
     def get_current_obs(self):
         return np.concatenate([
@@ -29,8 +49,12 @@ class AntEnv(MujocoEnv, Serializable):
 
     def step(self, action):
         self.forward_dynamics(action)
+        '''
         comvel = self.get_body_comvel("torso")
         forward_reward = comvel[0]
+        '''
+        forward_reward = self.get_forward_reward()
+
         lb, ub = self.action_bounds
         scaling = (ub - lb) * 0.5
         ctrl_cost = 0.5 * 1e-2 * np.sum(np.square(action / scaling))
