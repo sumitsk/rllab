@@ -27,13 +27,13 @@ class AntEnv(MujocoEnv, Serializable):
     def get_forward_reward(self):
         comvel = self.get_body_comvel("torso")
         if self.velocity_dir == 'posx':
-            forward_reward = comvel[0]
+            forward_reward = comvel[0] - abs(comvel[1])
         elif self.velocity_dir == 'posy':
-            forward_reward = comvel[1]
+            forward_reward = comvel[1] - abs(comvel[0])
         elif self.velocity_dir == 'negx':
-            forward_reward = -comvel[0]
+            forward_reward = -comvel[0] - abs(comvel[1])
         elif self.velocity_dir == 'negy':
-            forward_reward = -comvel[1]
+            forward_reward = -comvel[1] - abs(comvel[0])
         else:
             raise NotImplementedError
         return forward_reward
