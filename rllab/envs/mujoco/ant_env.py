@@ -19,12 +19,9 @@ class AntEnv(MujocoEnv, Serializable):
         Serializable.__init__(self, *args, **kwargs)
         self.velocity_dir = 'posx'
     
-    '''    
-    def myinit(self, velocity_dir):
-        self.velocity_dir = velocity_dir
-    '''
-    
     def get_forward_reward(self):
+        #print(self.velocity_dir)
+        
         comvel = self.get_body_comvel("torso")
         if self.velocity_dir == 'posx':
             forward_reward = comvel[0] - abs(comvel[1])
@@ -46,7 +43,14 @@ class AntEnv(MujocoEnv, Serializable):
             self.get_body_xmat("torso").flat,
             self.get_body_com("torso"),
         ]).reshape(-1)
-
+        '''  
+        return np.concatenate([
+            self.model.data.qpos.flat[2:],
+            self.model.data.qvel.flat,
+            np.clip(self.model.data.cfrc_ext, -1, 1).flat,
+        ])
+        '''
+    
     def step(self, action):
         self.forward_dynamics(action)
         '''
