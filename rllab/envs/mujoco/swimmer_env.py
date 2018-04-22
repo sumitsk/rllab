@@ -19,6 +19,8 @@ class SwimmerEnv(MujocoEnv, Serializable):
             ctrl_cost_coeff=1e-2,
             *args, **kwargs):
         self.ctrl_cost_coeff = ctrl_cost_coeff
+        self.velocity_dir = 'posx'
+        
         super(SwimmerEnv, self).__init__(*args, **kwargs)
         Serializable.quick_init(self, locals())
 
@@ -32,6 +34,20 @@ class SwimmerEnv(MujocoEnv, Serializable):
     def get_ori(self):
         return self.model.data.qpos[self.__class__.ORI_IND]
 
+    def get_forward_reward(self):
+        vel = self.get_body_comvel("torso")
+        if self.velocity_dir == "posx":
+            forward_reward = vel[0]
+        elif self.velocity_dir == 'posy':
+            forward_reward = vel[1]
+        elif self.velocity_dir == 'negx':
+            forward_reward = -vel[0]
+        elif self.velocity_dir == 'negy':
+            forward_reward = -vel[1]
+        else:
+            raise NotImplementedError
+        return forward_reward
+
     def step(self, action):
         self.forward_dynamics(action)
         next_obs = self.get_current_obs()
@@ -39,7 +55,8 @@ class SwimmerEnv(MujocoEnv, Serializable):
         scaling = (ub - lb) * 0.5
         ctrl_cost = 0.5 * self.ctrl_cost_coeff * np.sum(
             np.square(action / scaling))
-        forward_reward = self.get_body_comvel("torso")[0]
+        #forward_reward = self.get_body_comvel("torso")[0]
+        forward_reward = self.get_forward_reward()
         reward = forward_reward - ctrl_cost
         done = False
         return Step(next_obs, reward, done)
