@@ -40,7 +40,7 @@ class MazeEnv(ProxyEnv, Serializable):
             sensor_span=math.pi,
             maze_id=0,
             length=1,
-            maze_height=0.5,
+            maze_height=0.75,
             maze_size_scaling=2,
             coef_inner_rew=0.,  # a coef of 0 gives no reward to the maze from the wrapped env.
             goal_rew=1.,  # reward obtained when reaching the goal
