@@ -68,13 +68,13 @@
     </body>
   </worldbody>
   <actuator>
-    <motor joint="hip_4" ctrlrange="-50.0 50.0" ctrllimited="true" />
-    <motor joint="ankle_4" ctrlrange="-50.0 50.0" ctrllimited="true" />
-    <motor joint="hip_1" ctrlrange="-50.0 50.0" ctrllimited="true" />
-    <motor joint="ankle_1" ctrlrange="-50.0 50.0" ctrllimited="true" />
-    <motor joint="hip_2" ctrlrange="-50.0 50.0" ctrllimited="true" />
-    <motor joint="ankle_2" ctrlrange="-50.0 50.0" ctrllimited="true" />
-    <motor joint="hip_3" ctrlrange="-50.0 50.0" ctrllimited="true" />
-    <motor joint="ankle_3" ctrlrange="-50.0 50.0" ctrllimited="true" />
+    <motor joint="hip_4" ctrlrange="-25.0 25.0" ctrllimited="true" />
+    <motor joint="ankle_4" ctrlrange="-25.0 25.0" ctrllimited="true" />
+    <motor joint="hip_1" ctrlrange="-25.0 25.0" ctrllimited="true" />
+    <motor joint="ankle_1" ctrlrange="-25.0 25.0" ctrllimited="true" />
+    <motor joint="hip_2" ctrlrange="-25.0 25.0" ctrllimited="true" />
+    <motor joint="ankle_2" ctrlrange="-25.0 25.0" ctrllimited="true" />
+    <motor joint="hip_3" ctrlrange="-25.0 25.0" ctrllimited="true" />
+    <motor joint="ankle_3" ctrlrange="-25.0 25.0" ctrllimited="true" />
   </actuator>
 </mujoco>
