@@ -16,6 +16,7 @@ class AntEnv(MujocoEnv, Serializable):
 
     def __init__(self, *args, **kwargs):
         self.velocity_dir = 'posx'
+        self.penalty = 1.0                
         self.use_gym_obs = False
         self.use_gym_reward = False
 
@@ -27,13 +28,13 @@ class AntEnv(MujocoEnv, Serializable):
         
         comvel = self.get_body_comvel("torso")
         if self.velocity_dir == 'posx':
-            forward_reward = comvel[0] - abs(comvel[1])
+            forward_reward = comvel[0] -self.penalty * abs(comvel[1])
         elif self.velocity_dir == 'posy':
-            forward_reward = comvel[1] - abs(comvel[0])
+            forward_reward = comvel[1] -self.penalty * abs(comvel[0])
         elif self.velocity_dir == 'negx':
-            forward_reward = -comvel[0] - abs(comvel[1])
+            forward_reward = -comvel[0] - self.penalty * abs(comvel[1])
         elif self.velocity_dir == 'negy':
-            forward_reward = -comvel[1] - abs(comvel[0])
+            forward_reward = -comvel[1] - self.penalty * abs(comvel[0])
         else:
             raise NotImplementedError
         return forward_reward
