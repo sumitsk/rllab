@@ -10,3 +10,6 @@ class AntMazeEnv(MazeEnv):
     MAZE_HEIGHT = 2
     MAZE_SIZE_SCALING = 3.0
 
+    def __init__(self, model_file=None):
+        super(AntMazeEnv, self).__init__(model_file=model_file)
+

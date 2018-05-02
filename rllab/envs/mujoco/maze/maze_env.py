@@ -41,9 +41,10 @@ class MazeEnv(ProxyEnv, Serializable):
             maze_id=0,
             length=1,
             maze_height=0.5,
-            maze_size_scaling=3,
+            maze_size_scaling=2,
             coef_inner_rew=0.,  # a coef of 0 gives no reward to the maze from the wrapped env.
             goal_rew=1.,  # reward obtained when reaching the goal
+            model_file=None,
             *args,
             **kwargs):
         Serializable.quick_init(self, locals())
@@ -60,7 +61,10 @@ class MazeEnv(ProxyEnv, Serializable):
         model_cls = self.__class__.MODEL_CLASS
         if model_cls is None:
             raise "MODEL_CLASS unspecified!"
-        xml_path = osp.join(MODEL_DIR, model_cls.FILE)
+        if model_file == None:
+            xml_path = osp.join(MODEL_DIR, model_cls.FILE)
+        else:
+            xml_path = osp.join(MODEL_DIR, model_file)
         tree = ET.parse(xml_path)
         worldbody = tree.find(".//worldbody")
 
