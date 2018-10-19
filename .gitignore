@@ -37,3 +37,9 @@ blackbox
 rllab/config_personal.py
 *.swp
 sandbox
+
+
+rllab/envs/mujoco/maze/original*/
+rllab/envs/mujoco/original*/
+vendor/mujoco_models/modified*/
+vendor/mujoco_models/original*/
